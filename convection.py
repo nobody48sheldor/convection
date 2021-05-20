@@ -8,12 +8,11 @@ from matplotlib import style
 
 style.use('dark_background')
 
-n = 200
-T = 100
+n = 150
+T = 150
 tmax = 10
 D = 0.04
-vx = 25
-theta = 20
+theta = 15
 vx = np.linspace(0, 100, n)
 
 x = np.linspace(-10, 10, n)
