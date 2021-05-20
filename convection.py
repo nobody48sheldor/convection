@@ -13,7 +13,7 @@ T = 150
 tmax = 10
 D = 0.04
 theta = 15
-vx = np.linspace(0, 100, n)
+vx = np.linspace(0, 100, T)
 
 x = np.linspace(-10, 10, n)
 y = np.linspace(-10, 10, n)
@@ -77,22 +77,20 @@ def temperature_temps():
         print(i, "/", T)
 
 Temps = []
+TEMP = 0
 i = 0
 while i < n:
     V = Vx[i]
-    if i > 1:
-        if V[40] == Vx[i-1][40]:
-            print("jkqbdqzibdqzidbqzd")
-    TEMP = 1/temperature_temps()
+    if temperature_temps() ==  None:
+        TEMP = Temps[i-1]
+    if type(temperature_temps()) == float:
+        TEMP = 1/temperature_temps()
     print("TEMP = ", TEMP)
     Temps.append(TEMP)
     print(i)
     i = i + 1
 print(len(Temps))
 
-for i in range(len(Temps) - 1):
-    if Temps[i] ==  None:
-        Temps[i] = (Temps[i-1] + Temps[i+1])/2
 
 plt.imshow(psi_0(X, Y))
 plt.show()
