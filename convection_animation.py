@@ -10,7 +10,7 @@ style.use('dark_background')
 
 n = 200
 T = 300000
-tmax = 40000
+tmax = 1000
 D = 0.0001
 theta = 20
 vx = 1
