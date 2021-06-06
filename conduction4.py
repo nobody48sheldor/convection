@@ -6,11 +6,13 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import axes3d
 from matplotlib import style
 
+style.use('dark_background')
+
 dx = 0.2
 dy = 0.2
 dt = 0.02
 
-tmax = 20
+tmax = 50
 D = 0.2
 temp_0 = 20
 wind_speed = 0
@@ -32,7 +34,7 @@ X, Y = np.meshgrid(x, y)
 t = np.linspace(0, tmax, int(tmax/dt))
 
 def temperature_init(x, y):
-    S = temp_0*(np.exp(-0.2*(x**2 + y**2)) - 0.6*np.exp(-4*((x-2)**2 + y**2)))
+    S = temp_0*(np.exp(-0.2*(x**2 + y**2)) - 0.4*np.exp(-2*(x**2 + y**2)))
     return(S)
 
 def wind(wind_speed, x):
@@ -67,7 +69,10 @@ def temperature():
             Xw.append(Temperature[i-1][j][0])
             w = 1
             while w < int(len(x)-1):
-                xw = Temperature[i-1][w][j] + ( ((D * (((Temperature[i-1][j][w+1] - 2*Temperature[i-1][j][w] + Temperature[i-1][j][w-1]) / (dx*dx)) + ((Temperature[i-1][j+1][w] - 2*Temperature[i-1][j][w] + Temperature[i-1][j-1][w]) / (dy*dy)) ) ) - (Wind[w] * ((Temperature[i-1][j+1][w] - Temperature[i-1][j-1][w]) / (2*dy)) ) ) *dt)
+                if i < 2:
+                    xw = Temperature[i-1][w][j] + ( ((D * (((Temperature[i-1][j][w+1] - 2*Temperature[i-1][j][w] + Temperature[i-1][j][w-1]) / (dx*dx)) + ((Temperature[i-1][j+1][w] - 2*Temperature[i-1][j][w] + Temperature[i-1][j-1][w]) / (dy*dy)) ) ) - (Wind[w] * ((Temperature[i-1][j+1][w] - Temperature[i-1][j-1][w]) / (2*dy) ) ) ) *dt)
+                else:
+                    xw = Temperature[i-1][w][j] + (((D * (((Temperature[i-1][j][w+1] - 2*Temperature[i-1][j][w] + Temperature[i-1][j][w-1]) / (dx*dx)) + ((Temperature[i-1][j+1][w] - 2*Temperature[i-1][j][w] + Temperature[i-1][j-1][w]) / (dy*dy)) ) ) - (Wind[w] * (0.5 * (( (Temperature[i-1][j+1][w] - Temperature[i-1][j-1][w]) / (2*dy) ) + ( (Temperature[i-2][j+1][w] - Temperature[i-2][j-1][w]) / (2*dy) )) ) )) *dt)
                 Xw.append(xw)
                 w = w + 1
             Xw.append(Temperature[i-1][j][len(x)-1])
@@ -81,12 +86,15 @@ def temperature():
 
 Temp = temperature()
 
+input(" \\ ")
+
 fig = plt.figure()
 ax1 = plt.subplot(projection= '3d')
 T = 0
-while T < int(tmax/(dt*15)):
+plt.pause(5)
+while T < int(tmax/(dt*70)):
     ax1.clear()
-    ax1.plot_surface(X, Y, Temp[T*15], cmap = cm.plasma, linewidth=0, alpha = 1, antialiased=True)
+    ax1.plot_surface(X, Y, Temp[T*70], cmap = cm.plasma, linewidth=0, alpha = 1, antialiased=True)
     ax1.axes.set_xlim3d(left=-10, right=10)
     ax1.axes.set_ylim3d(bottom=-10, top=10)
     ax1.axes.set_zlim3d(bottom=0, top= temp_0 + temp_0/20)
