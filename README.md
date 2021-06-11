@@ -1,6 +1,6 @@
 # 2D convection equation
 the convection equation is written as :
-![enter image description here](https://cdn.discordapp.com/attachments/754704936838627378/851161057439645757/convection_equation.png)
+![enter image description here](https://cdn.discordapp.com/attachments/754704936838627378/851159202848178226/convection_equation_white.gif)
 
 the code allows me to solve it for any given initial condition
 
